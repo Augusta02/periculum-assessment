@@ -1,9 +1,9 @@
-### PDF ETL (Extract, Transform, Load) Pipeline
+# PDF ETL (Extract, Transform, Load) Pipeline
 This project extracts structured data from PDF files, transforms the raw content into a clean tabular format, and saves the processed data into a JSON file. The project is test assessment for the role of Data Science Intern at Periculum. 
 It is particularly useful for inventory PDFs like home inventories, property audits, or condition reports.
 
-Features
-# Extract: 
+## Features
+## Extract: 
 
 Reads table data from PDF documents using pdfplumber.
 
