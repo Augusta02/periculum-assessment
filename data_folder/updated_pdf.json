@@ -1,0 +1,226 @@
+{
+    "Owner Information": {
+        "owner_name": "John Doe",
+        "owner_address": "123 Maple Street",
+        "owner_telephone": "(503) 555-1234"
+    },
+    "data": [
+        {
+            "purchase_date": "2018-06-07",
+            "description": "Desk",
+            "serial_number": "6DDZ7S36",
+            "source_style_area": "Target Premium Living Room",
+            "value": "$ 846.59"
+        },
+        {
+            "purchase_date": "2015-05-31",
+            "description": "LED TV",
+            "serial_number": "NJEZ3OPO",
+            "source_style_area": "Walmart Classic Kitchen",
+            "value": "$ 382.04"
+        },
+        {
+            "purchase_date": "2019-03-03",
+            "description": "LED TV",
+            "serial_number": "HRIS4LI8",
+            "source_style_area": "Target Premium Living Room",
+            "value": "$ 1,603.37"
+        },
+        {
+            "purchase_date": "2023-03-26",
+            "description": "Dining Table",
+            "serial_number": "2HLNMD64",
+            "source_style_area": "Wayfair Modern Garage",
+            "value": "$ 552.74"
+        },
+        {
+            "purchase_date": "2020-01-06",
+            "description": "Tool Set",
+            "serial_number": "R08QDU0S",
+            "source_style_area": "Target Classic Living Room",
+            "value": "$ 1,546.39"
+        },
+        {
+            "purchase_date": "2015-04-03",
+            "description": "LED TV",
+            "serial_number": "GSABG41R",
+            "source_style_area": "Amazon Classic Office",
+            "value": "$ 1,319.36"
+        },
+        {
+            "purchase_date": "2022-02-28",
+            "description": "Mattress",
+            "serial_number": "DVTMS64O",
+            "source_style_area": "Amazon Premium Office",
+            "value": "$ 573.10"
+        },
+        {
+            "purchase_date": "2017-04-07",
+            "description": "Tool Set",
+            "serial_number": "RB93WPTH",
+            "source_style_area": "Home Depot Classic Bedroom",
+            "value": "$ 1,421.38"
+        },
+        {
+            "purchase_date": "2017-03-20",
+            "description": "Mattress",
+            "serial_number": "7RX8YNW9",
+            "source_style_area": "Target Compact Dining Room",
+            "value": "$ 1,760.11"
+        },
+        {
+            "purchase_date": "2019-06-30",
+            "description": "Desk",
+            "serial_number": "US1B0BQI",
+            "source_style_area": "Target Classic Living Room",
+            "value": "$ 941.43"
+        },
+        {
+            "purchase_date": "2016-02-09",
+            "description": "Dining Table",
+            "serial_number": "1J7088BO",
+            "source_style_area": "Wayfair Compact Garage",
+            "value": "$ 71.12"
+        },
+        {
+            "purchase_date": "2025-08-21",
+            "description": "Desk",
+            "serial_number": "GVJFQYT1",
+            "source_style_area": "Home Depot Modern Bedroom",
+            "value": "$ 841.41"
+        },
+        {
+            "purchase_date": "2022-09-23",
+            "description": "Dining Table",
+            "serial_number": "5EXQQOB1",
+            "source_style_area": "Best Buy Modern Office",
+            "value": "$ 1,686.96"
+        },
+        {
+            "purchase_date": "2017-04-07",
+            "description": "Dining Table",
+            "serial_number": "QZY31U1R",
+            "source_style_area": "Amazon Premium Kitchen",
+            "value": "$ 1,457.39"
+        },
+        {
+            "purchase_date": "2024-05-28",
+            "description": "Mattress",
+            "serial_number": "D4FYUJ8E",
+            "source_style_area": "Home Depot Classic Garage",
+            "value": "$ 182.96"
+        },
+        {
+            "purchase_date": "2023-08-13",
+            "description": "Dining Table",
+            "serial_number": "KO6MGEIY",
+            "source_style_area": "Amazon Premium Garage",
+            "value": "$ 127.00"
+        },
+        {
+            "purchase_date": "2022-07-12",
+            "description": "Tool Set",
+            "serial_number": "X7QIEB5T",
+            "source_style_area": "Amazon Premium Kitchen",
+            "value": "$ 1,457.28"
+        },
+        {
+            "purchase_date": "2024-08-27",
+            "description": "Desk",
+            "serial_number": "BI1UXOJ9",
+            "source_style_area": "Walmart Compact Garage",
+            "value": "$ 103.48"
+        },
+        {
+            "purchase_date": "2023-10-13",
+            "description": "Dining Table",
+            "serial_number": "4GEV5RRW",
+            "source_style_area": "Amazon Classic Garage",
+            "value": "$ 403.55"
+        },
+        {
+            "purchase_date": "2015-12-12",
+            "description": "LED TV",
+            "serial_number": "F7IKU0DS",
+            "source_style_area": "Best Buy Classic Office",
+            "value": "$ 541.69"
+        },
+        {
+            "purchase_date": "2017-07-22",
+            "description": "LED TV",
+            "serial_number": "8HCSY97G",
+            "source_style_area": "Amazon Premium Living Room",
+            "value": "$ 1,851.93"
+        },
+        {
+            "purchase_date": "2017-07-25",
+            "description": "Stand Mixer",
+            "serial_number": "3BTI1E79",
+            "source_style_area": "Best Buy Premium Living Room",
+            "value": "$ 1,734.69"
+        },
+        {
+            "purchase_date": "2016-03-08",
+            "description": "Tool Set",
+            "serial_number": "7RBCLH8X",
+            "source_style_area": "Amazon Classic Living Room",
+            "value": "$ 1,351.20"
+        },
+        {
+            "purchase_date": "2020-03-03",
+            "description": "Dining Table",
+            "serial_number": "W5I85PVW",
+            "source_style_area": "Home Depot Premium Bedroom",
+            "value": "$ 148.41"
+        },
+        {
+            "purchase_date": "2021-11-25",
+            "description": "Desk",
+            "serial_number": "YJHBPF1G",
+            "source_style_area": "Wayfair Premium Dining Room",
+            "value": "$ 1,896.32"
+        },
+        {
+            "purchase_date": "2020-05-16",
+            "description": "Dining Table",
+            "serial_number": "GQPBD9OJ",
+            "source_style_area": "Best Buy Modern Living Room",
+            "value": "$ 974.74"
+        },
+        {
+            "purchase_date": "2025-09-10",
+            "description": "Desk",
+            "serial_number": "14TNDRC5",
+            "source_style_area": "Walmart Modern Garage",
+            "value": "$ 859.33"
+        },
+        {
+            "purchase_date": "2018-09-15",
+            "description": "LED TV",
+            "serial_number": "QDD9Q659",
+            "source_style_area": "Best Buy Modern Dining Room",
+            "value": "$ 1,072.67"
+        },
+        {
+            "purchase_date": "2024-11-05",
+            "description": "LED TV",
+            "serial_number": "DXW026Z7",
+            "source_style_area": "Amazon Compact Bedroom",
+            "value": "$ 129.39"
+        },
+        {
+            "purchase_date": "2019-11-15",
+            "description": "Tool Set",
+            "serial_number": "GZFM295X",
+            "source_style_area": "Best Buy Compact Kitchen",
+            "value": "$ 1,801.21"
+        },
+        {
+            "purchase_date": "2025-02-15",
+            "description": "Dining Table",
+            "serial_number": "20SQB8Q2",
+            "source_style_area": "Amazon Classic Dining Room",
+            "value": "$ 284.67"
+        }
+    ]
+}

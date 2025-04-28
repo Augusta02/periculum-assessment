@@ -6,13 +6,53 @@ import json
 
 
 
+class OwnerInfo:
+    """
+    A class to represent the owner information.
+    """
 
+    def __init__(self, owner_name, owner_address, owner_telephone):
+        self.name = owner_name
+        self.address = owner_address
+        self.phone = owner_telephone
+
+
+    def to_dict(self):
+
+        return {
+            "owner_name": self.name,
+            "owner_address": self.address, "owner_address": self.address, "owner_telephone": self.phone
+        }
+
+
+
+class Inventory:
+    """
+    A class to represent the inventory information.
+    """
+
+    def __init__(self,  purchase_date,serial_number, description, source_style_area, value):
+        self.purchase_date = purchase_date
+        self.description = description
+        self.serial_number = serial_number
+        self.source_style_area = source_style_area
+        self.value = value
+
+    def to_dict(self):
+        return {
+            "purchase_date": self.purchase_date,
+            "description": self.description,
+            "serial_number": self.serial_number,
+            "source_style_area": self.source_style_area,
+            "value": self.value
+        }
+    
 class PDFETL:
     """
     A class to extract, transform, and load data from a PDF file.
     """
 
-    def __init__(self, area_list, source_list, pdf_output= 'pdf.json'):
+    def __init__(self, area_list, source_list, pdf_output= 'updated_pdf.json'):
         self.area_list = area_list
         self.source_list = source_list
         self.pdf_output = pdf_output    
@@ -32,26 +72,27 @@ class PDFETL:
             return None
         # Extract text from the PDF file
         all_tables_data = []
+        
 
         try:
             with pdfplumber.open(file_path) as pdf:
-                for page_num, page in enumerate(pdf.pages):
-                    print(f"Processing page {page_num + 1}...")
+                for page in pdf.pages:
                     tables = page.find_tables()
                     for table in tables:
                         table_data = table.extract()
                         if table_data:
                             all_tables_data.extend(table_data)
             return all_tables_data
-
-
+        
         except Exception as e:
             print(f"Error extracting text from PDF: {e}")
             return None
-    
-    # this function will align the content of the pdf file
+        
+     # this function will align the content of the pdf file
     # the function will take the content of the pdf file and align it into a tabular format
     # the function will return the aligned content
+
+
     def align_content(self, content):
         align_content = {}
         owner_section = content[1:5]
@@ -64,15 +105,10 @@ class PDFETL:
         inventory_columns = inventory_section[0]
 
         row_data = inventory_section[1]
-        condition_raw = inventory_section[2]
-        condition_data = inventory_section[3][0]
-        condition_table = "Condition:\n"
-        condition_table += f"{condition_raw[0]:<10}\n"
-        condition_table += "-" * 15 + "\n"
-
+        
         # print(condition_data)
         texts = row_data[0]
-    
+
         align_inventory_columns = "Inventory:\n" 
         align_inventory_columns += f"{inventory_columns[0]:<10} {inventory_columns[1]:<10} {inventory_columns[2]:<10} {inventory_columns[3]:<10} {inventory_columns[4]:<10} {inventory_columns[5]:<10} {inventory_columns[6]:<10}\n "
         align_inventory_columns += "-" * 100 + "\n"
@@ -131,109 +167,89 @@ class PDFETL:
             else: 
                 align_inventory_columns += "No match found for this item.\n"
                 align_content['Inventory'] = align_inventory_columns
-
-        for condition in condition_data.strip().split('\n'):
-            condition_table += f"{condition}\n"
-        align_content['Condition'] = condition_table
-
-        
-        
         return align_content
-    
 
-# this function will extract the data from the aligned content and return it in a dictionary format
-# the function will take the aligned content and extract the data from it
 
-# extract data into dictionary 
+
+
+        # this function will extract the data from the aligned content and return it in a dictionary format
+        # extract data into dictionary 
     def extract_data(self, test):
         extracted_data = {}
-        for section, content in test.items():
-            if section == 'Owner Information':
-                owner_info = {}
-                lines = content.split('\n')[1:]
-                for line in lines:
-                    if ':' in line:
-                        key, value = line.split(':', 1)
-                        owner_info[key.strip()] = value.strip()
-                extracted_data['Owner Information'] = owner_info
+        owner_info = {}
+        owner_info_str = test.get('Owner Information', None)  # handle the key not existing
+        if owner_info_str:
+            owner_info = {}
+            lines = owner_info_str.split('\n')[1:]
+            for line in lines:
+                if ':' in line:
+                    key, value = line.split(':', 1)
+                    owner_info[key.strip()] = value.strip()
+            owner_info_obj = OwnerInfo(
+                owner_name=owner_info.get("Name", ""),  # Default values
+                owner_address=owner_info.get("Address", ""),
+                owner_telephone=owner_info.get("Phone Number", "")
+            )
+            extracted_data["Owner Information"] = owner_info_obj.to_dict()
+        else:
+            extracted_data["Owner Information"] = {}
+        
 
-            elif section == 'Inventory':
-                inventory_list = []
-                lines = content.split('\n')[2:]  # Skip the header lines
-                # regular expression to match the area and source values in the inventory
-                area_regex = r"(?P<area>" + "|".join(area_list) + ")"
-                source_regex = r"(?P<source>" + "|".join(source_list) + ")"
+        inventory_info = test.get('Inventory', None)  # handle the key not existing
+        lines = inventory_info.split('\n')[2:]
 
-                # regex to match the inventory data
-                # the regex will match the number, area, item description, source, purchase date, style, serial number and value
-                # the regex will also match the area and source values if they are present
+        inventory_list = []
 
-                regex = rf"""
-                    (?P<number>\d+)\s+
-                    (?:{area_regex}\s+)?
-                    (?P<item_description>(?:[\w\s'-]+?))\s+
-                    (?:{source_regex}\s+)?
-                    (?P<date>\d{{2}}-\d{{2}}-\d{{4}})\s+
-                    (?P<style>\w+)\s+
-                    (?P<serial_number>\w+)\s+
-                    (?P<value>[$]\s[\d,.]+)
-                """
+        # regular expression to match the area and source values in the inventory
+        area_regex = r"(?P<area>" + "|".join(rf"\b{re.escape(area)}\b" for area in area_list) + ")"
+        source_regex = r"(?P<source>" + "|".join(rf"\b{re.escape(source)}\b" for source in source_list) + ")"
 
-                # for loop to iterate through the lines of the inventory data
-                # the regex will match the number, area, item description, source, purchase date, style, serial number and value
-                for line in lines:
+        # regex to match the inventory data
+        # the regex will match the number, area, item description, source, purchase date, style, serial number and value
+        # the regex will also match the area and source values if they are present
 
-                    match = re.search(regex, line.strip(), re.VERBOSE)
-                    # print(match)
+        regex = rf"""
+            (?P<number>\d+)\s+
+            (?:{area_regex}\s+)?            
+            (?P<item_description>.*?)       
+            (?:\s+{source_regex})?           
+            \s+(?P<date>\d{{2}}-\d{{2}}-\d{{4}}) 
+            \s+(?P<style>\w+)
+            \s+(?P<serial_number>\w+)
+            \s+(?P<value>\$\s[\d,.]+)
+        """
+        for line in lines:
 
-                    if match:
-                        number = match.group('number')
-                        # Default to empty string if not found
-                        area = match.group('area') or ''  
-                        item_description = match.group('item_description').strip()
-                        source = match.group('source') or ''
-                        date_str = match.group('date')
-                        style = match.group('style')
-                        serial_number = match.group('serial_number')
-                        value = match.group('value')        
+            match = re.search(regex, line.strip(), re.VERBOSE)
+            # print(match)
+
+            if match:
+                purchase_date = match.group('date')
+                try:
+                    date_string = datetime.datetime.strptime(purchase_date, "%d-%m-%Y").date()
+                    purchase_date_iso = date_string.isoformat()
+                except ValueError:
+                    print(f"Invalid date format: {purchase_date}")
+                    purchase_date_iso = None
+
+                # (?:[\w\s'-]+(?:\s[\w\s'-]+)*?))\s+
+                source_style_area = f"{match.group('source')} {match.group('style')} {match.group('area')}".strip()
+                inventory_item = Inventory(
+                    purchase_date=purchase_date_iso,
+                    serial_number=match.group('serial_number'),
+                    description=match.group('item_description'),
+                    source_style_area=source_style_area,
+                    value=match.group('value')
+                )
+
+                inventory_list.append(inventory_item.to_dict())
+                # print(inventory_ite)
                 
-                        # Convert the date string to ISO format
-                        try:
-                            date_string = datetime.datetime.strptime(date_str, "%d-%m-%Y").date()
-                            purchase_date_iso = date_string.isoformat()
-                        except ValueError:
-                            print(f"Invalid date format: {date_str}")
-                        # continue
-                    # Create a dictionary for each inventory item
-                        inventory_item = {
-                            'Number': number,
-                            'Area': area,
-                            'Item Description': item_description,
-                            'Source': source,
-                            'Purchase Date': purchase_date_iso,
-                            'Style': style,
-                            'Serial Number': serial_number,
-                            'Value': value
-                        }
-                        inventory_list.append(inventory_item)
-                extracted_data['data'] = inventory_list
-            elif section == 'Condition':
-                condition_list = []
-                lines = content.split('\n')[3:] # Skip the header lines
-                for line in lines:
-                    if line.strip():  # Ignore empty lines
-                        condition_list.append(line.strip())
-                
-            # merge the condition list into the data dictionary
-                if 'data' in extracted_data:
-                    for index, item in enumerate(extracted_data['data']):
-                        if index < len(condition_list):
-                            item['Condition'] = condition_list[index]
-                        else:
-                            item['Condition'] = 'N/A'
 
+        extracted_data["data"] = [item for item in inventory_list]
         return extracted_data
     
+
     # this function will save the extracted data to a json file
     def save_to_json(self, data, output_file):
         output_path = os.path.join(self.data_folder, output_file)
@@ -272,4 +288,11 @@ if __name__ == "__main__":
         print("Data extraction and transformation completed successfully.")
     else:
         print("Data extraction and transformation failed.")
-   
+
+
+
+
+
+    
+
+
